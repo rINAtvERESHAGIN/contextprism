@@ -8,6 +8,12 @@
     },
     {
       "path": "./apps/contextprism"
+    },
+    {
+      "path": "./apps/examples/todo-e2e"
+    },
+    {
+      "path": "./apps/examples/todo"
     }
   ]
 }
