@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
-import { chatApp } from './routes/api/chat';
+
 import { helloWorldRoutes } from './routes/api/hello-worlds';
 import { prettyJSON } from 'hono/pretty-json';
 import { llm } from './routes/api/llm';
@@ -24,7 +24,6 @@ app.use(
   })
 );
 // ---Routes
-app.route('/hono/api/chat', chatApp);
 app.route('/hono/api/hello', helloWorldRoutes);
 app.route('hono/api/llm/', llm);
 
