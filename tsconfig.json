@@ -14,6 +14,12 @@
     },
     {
       "path": "./apps/examples/todo"
+    },
+    {
+      "path": "./apps/whisper-proxy-e2e"
+    },
+    {
+      "path": "./apps/whisper-proxy"
     }
   ]
 }

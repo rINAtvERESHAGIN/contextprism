@@ -1,0 +1,21 @@
+{
+  "name": "@contextprism/whisper-proxy",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "whisper-proxy"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "ai": "^6.0.105",
+    "ai-sdk-ollama": "^3.8.0",
+    "hono": "^4.12.3",
+    "tsx": "^4.21.0",
+    "zod": "^4.3.6"
+  }
+}

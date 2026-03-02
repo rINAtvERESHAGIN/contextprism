@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
 import {
   AppWrapper,
-  Card,
-  Title,
+  Card as TCard,
+  Title as TTitle,
   InputRow,
   StyledInput,
-  AddButton,
-  TaskList,
-  TaskItem,
-  TaskText,
-  DeleteButton,
-  EmptyMessage,
+  AddButton as TAddButton,
+  TaskList as TTaskList,
+  TaskItem as TTaskItem,
+  TaskText as TTaskText,
+  DeleteButton as TDeleteButton,
+  EmptyMessage as TEmptyMessage,
 } from '../shared/components-ui';
 import { useTodoStore } from './store';
+import { useToContextPrism } from '../ai/collectors/hooks.collectors';
+import { withLogging } from '../ai/hocs';
 
 // ─── Component ───────────────────────────────────────────────────────
+
+const Title = withLogging(TTitle, 'Title', 'Обычный заголовок');
+const AddButton = withLogging(TAddButton, 'AddButton', 'Кнопка добавить');
+const TaskList = withLogging(TTaskList, 'TaskList', 'others');
+const TaskItem = withLogging(TTaskItem, 'TaskItem', 'others');
+const TaskText = withLogging(TTaskText, 'TaskText', 'others');
+const DeleteButton = withLogging(TDeleteButton, 'DeleteButton', 'others');
+const EmptyMessage = withLogging(TEmptyMessage, 'EmptyMessage', 'others');
+const Card = withLogging(TCard, 'TCard', 'others');
 
 const App: React.FC = () => {
   const { tasks, addTask, toggleTask, removeTask } = useTodoStore();
   const [input, setInput] = useState<string>('');
+
+  // useToContextPrism<typeof tasks>({
+  //   name: 'tasks',
+  //   value: tasks,
+  //   config: { descriptions: 'Hello soo' },
+  // });
+  useToContextPrism<typeof tasks>('tasks', tasks, {
+    descriptions: 'Hello soo',
+  });
+  useToContextPrism<typeof input>('input', input, {
+    descriptions: 'Hello soo',
+  });
 
   const handleAdd = () => {
     if (input.trim()) {
@@ -38,20 +61,20 @@ const App: React.FC = () => {
 
         <InputRow>
           <StyledInput
-            type="text"
+            type='text'
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Что нужно сделать?"
+            placeholder='Что нужно сделать?'
           />
           <AddButton onClick={handleAdd}>Добавить</AddButton>
         </InputRow>
 
         <TaskList>
-          {tasks.map((task) => (
+          {tasks.map(task => (
             <TaskItem key={task.id}>
               <input
-                type="checkbox"
+                type='checkbox'
                 checked={task.completed}
                 onChange={() => toggleTask(task.id)}
                 style={{
