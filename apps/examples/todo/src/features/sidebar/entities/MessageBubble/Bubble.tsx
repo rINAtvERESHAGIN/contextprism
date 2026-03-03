@@ -5,22 +5,20 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import { cn } from '../../../../shared/tools';
+import { MessagePartsRenderer } from '../MessagePartsRenderer/MessagePartsRenderer';
 
-export function MessageBubble({ message }: { message: UIMessage }) {
+
+export function MessageBubble({
+  message,
+  addToolOutput,
+}: {
+  message: UIMessage;
+  addToolOutput: (payload: any) => void;
+}) {
   const isUser = message.role === 'user';
 
-  const content = message.parts
-    .filter(part => part.type === 'text')
-    .map(part => {
-      const text = part.text;
-      if (text == null || typeof text !== 'string') {
-        return '';
-      }
-      return text;
-    })
-    .join('');
-
-  const displayContent = content.trim() === '' ? '▋' : content;
+  const hasParts = Array.isArray(message.parts) && message.parts.length > 0;
+  const displayParts = hasParts ? message.parts : [{ type: 'text', text: '▋' }];
 
   return (
     <motion.div
@@ -68,8 +66,13 @@ export function MessageBubble({ message }: { message: UIMessage }) {
           },
         }}
       >
-        {displayContent}
+        {''}
       </ReactMarkdown>
+
+      <MessagePartsRenderer
+        parts={displayParts}
+        addToolOutput={addToolOutput}
+      />
     </motion.div>
   );
 }

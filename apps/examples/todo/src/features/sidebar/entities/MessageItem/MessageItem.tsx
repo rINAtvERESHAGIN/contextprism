@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion';
-import { MessageBubble } from '../Bubble/Bubble';
 
 import { cn } from '../../../../shared/tools';
 import { Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 import { UIMessage } from 'ai';
+import { MessageBubble } from '../MessageBubble/Bubble';
 
-export function MessageItem({ message }: { message: UIMessage }) {
+export function MessageItem({
+  message,
+  addToolOutput,
+}: {
+  message: UIMessage;
+  addToolOutput: (payload: any) => void;
+}) {
   const isUser = message.role === 'user';
 
   return (
@@ -26,17 +32,17 @@ export function MessageItem({ message }: { message: UIMessage }) {
           sx={{ width: 24, height: 24, bgcolor: deepPurple[500] }}
           className='mt-1'
           src='/ai.png'
-        ></Avatar>
+        />
       )}
 
-      <MessageBubble message={message} />
+      <MessageBubble message={message} addToolOutput={addToolOutput} />
 
       {isUser && (
         <Avatar
           sx={{ width: 24, height: 24 }}
           className='mt-1'
           src='/user.png'
-        ></Avatar>
+        />
       )}
     </motion.div>
   );

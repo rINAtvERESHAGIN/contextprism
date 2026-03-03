@@ -17,8 +17,9 @@ export const SearchInput = ({
       name={name}
       control={control}
       defaultValue=''
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, value, ...rest } }) => (
         <TextField
+          {...rest}
           fullWidth
           variant='outlined'
           size='medium'

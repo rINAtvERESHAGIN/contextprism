@@ -32,74 +32,97 @@ const app = new Hono();
 const ollama = createOllama({ baseURL: BASE_URL });
 
 // Define the POST route: /hono/api/llm/chat
-app.get('/models', async c => {
-  const response = await fetch(`${BASE_URL}/api/tags`);
-  const data = await response.json();
-
-  return c.json(data);
-});
 app.post('/chat', async ({ req }) => {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  const { messages, model }: { messages: UIMessage[]; model: string } =
+    await req.json();
+  const tools = {
+    // server-side tool with execute function:
+    getWeatherInformation: {
+      description: 'show the weather in a given city to the user',
+      inputSchema: z.object({ city: z.string() }),
+      execute: async ({}: { city: string }) => {
+        const weatherOptions = ['sunny', 'cloudy', 'rainy', 'snowy', 'windy'];
+        return weatherOptions[
+          Math.floor(Math.random() * weatherOptions.length)
+        ];
+      },
+    },
+    // client-side tool that starts user interaction:
+    askForConfirmation: {
+      description: 'Ask the user for confirmation.',
+      inputSchema: z.object({
+        message: z.string().describe('The message to ask for confirmation.'),
+      }),
+    },
+    // client-side tool that is automatically executed on the client:
+    getLocation: {
+      description:
+        'Get the user location. Always ask for confirmation before using this tool.',
+      inputSchema: z.object({}),
+    },
+  };
+  const system = [
+    {
+      role: 'system',
+      content:
+        'Всегда отвечай на русском языке, можно использовать англицизмы и не переводимые слова!',
+    },
+    {
+      role: 'system',
+      content: [
+        'Ты отвечаешь **максимально кратко и прямо**.',
+        'Запрещено:',
+        '- использовать <think>',
+        '- писать внутренние рассуждения',
+        '- объяснять ход мыслей',
+        '- писать Давай подумаем',
+        'Сначала разберёмся и любые преамбулы',
+        'Отвечай **только финальным ответом**, без единого лишнего слова.',
+        'Начинай сразу с сути.',
+      ].join('\n'),
+    },
+    {
+      role: 'system',
+      content: [
+        'Ты — полезный и точный помощник.',
+        'Отвечай **исключительно** в хорошо структурированном Markdown.\n',
+        '\n',
+        'Обязательные правила:\n',
+        '\n',
+        '- Начинай ответ с заголовка ## (например ## Ответ, ## Решение, ## Объяснение)',
+        '- Используй ### для подзаголовков',
+        '- **Жирный** — для важных слов и терминов',
+        '- *Курсив* — для выделения мыслей или названий',
+        '- Нумерованные списки — для шагов и последовательностей',
+        '- Маркированные списки — для перечислений',
+        '- Таблицы — когда нужно сравнивать или показывать данные',
+        '- **Код, команды, JSON, конфиги** — всегда внутри fenced блоков с указанием языка:',
+        '',
+        '```typescript',
+        '// пример',
+        'const x = 10;',
+        '```',
+        '',
+        '```bash',
+        'npm install ai',
+        '```',
+        '',
+        '- Никогда не пиши код без указания языка после ```',
+        '- Не используй тройные обратные кавычки внутри других тройных кавычек',
+        '- Не добавляй вступительные фразы типа «Конечно», «Вот ответ», «Я думаю»',
+        '- Если ответ длинный — разбивай на логические блоки с заголовками',
+        '',
+        'Отвечай строго по этим правилам.',
+      ].join('\n'),
+    },
+  ];
   const result = streamTextAi({
     // model: ollama('gemma3:1b'),
     // model: ollama('qwen3-vl:8b'),
-    model: ollama('llama3.2:3b'),
+    model: ollama(model),
     messages: await convertToModelMessages(messages),
-    system: [
-      {
-        role: 'system',
-        content:
-          'Всегда отвечай на русском языке, можно использовать англицизмы и не переводимые слова!',
-      },
-      {
-        role: 'system',
-        content: [
-          'Ты отвечаешь **максимально кратко и прямо**.',
-          'Запрещено:',
-          '- использовать <think>',
-          '- писать внутренние рассуждения',
-          '- объяснять ход мыслей',
-          '- писать Давай подумаем',
-          'Сначала разберёмся и любые преамбулы',
-          'Отвечай **только финальным ответом**, без единого лишнего слова.',
-          'Начинай сразу с сути.',
-        ].join('\n'),
-      },
-      {
-        role: 'system',
-        content: [
-          'Ты — полезный и точный помощник.',
-          'Отвечай **исключительно** в хорошо структурированном Markdown.\n',
-          '\n',
-          'Обязательные правила:\n',
-          '\n',
-          '- Начинай ответ с заголовка ## (например ## Ответ, ## Решение, ## Объяснение)',
-          '- Используй ### для подзаголовков',
-          '- **Жирный** — для важных слов и терминов',
-          '- *Курсив* — для выделения мыслей или названий',
-          '- Нумерованные списки — для шагов и последовательностей',
-          '- Маркированные списки — для перечислений',
-          '- Таблицы — когда нужно сравнивать или показывать данные',
-          '- **Код, команды, JSON, конфиги** — всегда внутри fenced блоков с указанием языка:',
-          '',
-          '```typescript',
-          '// пример',
-          'const x = 10;',
-          '```',
-          '',
-          '```bash',
-          'npm install ai',
-          '```',
-          '',
-          '- Никогда не пиши код без указания языка после ```',
-          '- Не используй тройные обратные кавычки внутри других тройных кавычек',
-          '- Не добавляй вступительные фразы типа «Конечно», «Вот ответ», «Я думаю»',
-          '- Если ответ длинный — разбивай на логические блоки с заголовками',
-          '',
-          'Отвечай строго по этим правилам.',
-        ].join('\n'),
-      },
-    ],
+    // tools,
+    system,
   });
 
   return result.toUIMessageStreamResponse();
@@ -150,6 +173,13 @@ app.post('/messages', async c => {
       500
     );
   }
+});
+
+app.get('/models', async c => {
+  const response = await fetch(`${BASE_URL}/api/tags`);
+  const data = await response.json();
+
+  return c.json(data);
 });
 
 export { app as llm };
