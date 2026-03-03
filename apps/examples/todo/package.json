@@ -4,5 +4,27 @@
   "private": true,
   "nx": {
     "name": "todo"
+  },
+  "dependencies": {
+    "@ai-sdk/react": "^3.0.107",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.8",
+    "@mui/material": "^7.3.8",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query": "^5.90.21",
+    "ai": "^6.0.105",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.34.3",
+    "react-hook-form": "^7.71.2",
+    "react-markdown": "^10.1.0",
+    "react-resizable-panels": "^4.7.0",
+    "react-syntax-highlighter": "^16.1.1",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.13"
   }
 }

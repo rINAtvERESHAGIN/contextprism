@@ -17,12 +17,12 @@ export const withLogging = <P extends object>(
     } = props as any; // any — чтобы не усложнять типизацию для примера
 
     const log = debounce((eventType: string) => {
-      console.log(
-        name,
-        description || WrappedComponent.name || 'Component',
-        '---------',
-        eventType
-      );
+      // console.log(
+      //   name,
+      //   description || WrappedComponent.name || 'Component',
+      //   '---------',
+      //   eventType
+      // );
     }, 300);
 
     const handleMouseEnter = (e: React.MouseEvent) => {

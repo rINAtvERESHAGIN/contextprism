@@ -7,7 +7,6 @@ export const AppWrapper = styled.div`
   background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
   font-family:
     system-ui,
     -apple-system,
