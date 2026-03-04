@@ -16,6 +16,7 @@ import { useTodoStore } from './store';
 import { useToContextPrism } from '../ai/collectors/hooks.collectors';
 import { useState } from 'react';
 import { withAiSidebar } from '../features/ai-connector/WithAiSidebar.hoc';
+import { AiUi } from '@contextprism/aiui';
 
 export const TodoAppWithAi = withAiSidebar(TodoApp);
 
@@ -27,6 +28,8 @@ const TaskText = withLogging(TTaskText, 'TaskText', 'others');
 const DeleteButton = withLogging(TDeleteButton, 'DeleteButton', 'others');
 const EmptyMessage = withLogging(TEmptyMessage, 'EmptyMessage', 'others');
 const Card = withLogging(TCard, 'TCard', 'others');
+
+console.log(AiUi);
 
 export function TodoApp() {
   const { tasks, addTask, toggleTask, removeTask } = useTodoStore();

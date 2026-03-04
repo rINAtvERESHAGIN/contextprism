@@ -22,7 +22,8 @@
     "react-syntax-highlighter": "^16.1.1",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "@contextprism/aiui": "workspace:*"
   },
   "devDependencies": {
     "@types/react-syntax-highlighter": "^15.5.13"
