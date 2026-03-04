@@ -2,4 +2,5 @@ packages:
   - 'apps/*'
   - 'apps/examples/*'
   - 'libs/*'
+  - 'libs/ui/*'
 autoInstallPeers: true

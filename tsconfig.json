@@ -23,6 +23,15 @@
     },
     {
       "path": "./libs/aiui"
+    },
+    {
+      "path": "./libs/ui/sidebar"
+    },
+    {
+      "path": "./libs/ui/chat"
+    },
+    {
+      "path": "./libs/tools"
     }
   ]
 }
