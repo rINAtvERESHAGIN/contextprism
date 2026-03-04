@@ -1,14 +1,6 @@
-import {
-  Conversation,
-  ConversationContent,
-  ConversationEmptyState,
-  ConversationDownload,
-  ConversationScrollButton,
-} from '@/components/ai-elements/conversation';
-import { Message, MessageContent, MessageResponse } from '@/components/ai-elements/message';
+import { Conversation, ConversationContent, ConversationDownload, ConversationEmptyState, ConversationScrollButton, Message, MessageContent, MessageResponse } from '@contextprism/aiui';
 import { UIMessage } from 'ai';
 import { MessageSquare } from 'lucide-react';
-
 
 export function ChatMessagesRoot({
   messages,

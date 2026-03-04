@@ -6,7 +6,6 @@ import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls,
 } from 'ai';
-import { MessageList } from '../entities/MessageList/MessageList';
 import { Title } from './Title.Sidebar';
 import styled from 'styled-components';
 import {
@@ -17,6 +16,7 @@ import {
 } from 'react-hook-form';
 import { SearchInput } from '../form/SearchInput';
 import { ChatMessagesRoot } from '../entities/ChatMessagesRoot/ChatMessagesRoot';
+import { Snippet, SnippetAddon, SnippetCopyButton, SnippetInput } from '@contextprism/aiui';
 
 interface SidebarProps {
   // Можно передать open и onClose, если нужен временный режим
@@ -129,6 +129,12 @@ export function Sidebar({}: SidebarProps) {
           </InputLayout>
           <Divider />
           <MessagesChatLayout>
+            <Snippet code='git clone https://github.com/user/repo'>
+              <SnippetInput />
+              <SnippetAddon align='inline-end'>
+                <SnippetCopyButton />
+              </SnippetAddon>
+            </Snippet>
             <ChatMessagesRoot
               addToolOutput={addToolOutput}
               messages={messages}

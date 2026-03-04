@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import dts from 'vite-plugin-dts';
 import * as path from 'path';
-
+import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/libs/aiui',
@@ -13,7 +13,13 @@ export default defineConfig(() => ({
       entryRoot: 'src',
       tsconfigPath: path.join(import.meta.dirname, 'tsconfig.lib.json'),
     }),
+    tailwindcss()
   ],
+  resolve: {
+    alias: {
+      "@": path.join(import.meta.dirname, "./src"),
+    },
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [],
