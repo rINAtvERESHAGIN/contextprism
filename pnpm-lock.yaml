@@ -150,6 +150,9 @@ importers:
       jsdom:
         specifier: ~22.1.0
         version: 22.1.0
+      jsonc-eslint-parser:
+        specifier: ^2.1.0
+        version: 2.4.2
       nx:
         specifier: 22.5.2
         version: 22.5.2(@swc-node/register@1.11.1(@swc/core@1.15.13(@swc/helpers@0.5.19))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.13(@swc/helpers@0.5.19))
@@ -178,9 +181,11 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/react@19.2.14)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
 
-  apps/contextprism: {}
-
-  apps/contextprism-e2e: {}
+  apps/contextprism:
+    dependencies:
+      '@contextprisme/sidebar':
+        specifier: workspace:*
+        version: link:../../libs/ui/ai-sidebar
 
   apps/examples/todo:
     dependencies:
@@ -193,6 +198,9 @@ importers:
       '@contextprism/contextprism':
         specifier: workspace:*
         version: link:../../contextprism
+      '@contextprisme/sidebar':
+        specifier: workspace:*
+        version: link:../../../libs/ui/ai-sidebar
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.2.14)(react@19.2.4)
@@ -249,8 +257,6 @@ importers:
         specifier: ^15.5.13
         version: 15.5.13
 
-  apps/examples/todo-e2e: {}
-
   backend:
     dependencies:
       '@hono/node-server':
@@ -271,6 +277,18 @@ importers:
       zod:
         specifier: ^4.3.6
         version: 4.3.6
+
+  libs/aiApiSdk:
+    dependencies:
+      '@ai-sdk/react':
+        specifier: ^3.0.107
+        version: 3.0.107(react@19.2.4)(zod@4.3.6)
+      '@tanstack/react-query':
+        specifier: ^5.90.21
+        version: 5.90.21(react@19.2.4)
+      ai:
+        specifier: ^6.0.105
+        version: 6.0.105(zod@4.3.6)
 
   libs/aiui:
     dependencies:
@@ -329,6 +347,30 @@ importers:
 
   libs/tools: {}
 
+  libs/ui/ai-sidebar:
+    dependencies:
+      '@contextprism/aiApiSdk':
+        specifier: workspace:*
+        version: link:../../aiApiSdk
+      '@contextprisme/chat':
+        specifier: workspace:*
+        version: link:../chat
+      '@emotion/styled':
+        specifier: ^11.14.1
+        version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4)
+      '@mui/icons-material':
+        specifier: ^7.3.8
+        version: 7.3.8(@mui/material@7.3.8(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.14)(react@19.2.4)
+      '@mui/material':
+        specifier: ^7.3.8
+        version: 7.3.8(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-hook-form:
+        specifier: ^7.71.2
+        version: 7.71.2(react@19.2.4)
+      react-resizable-panels:
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+
   libs/ui/chat:
     dependencies:
       '@contextprism/aiui':
@@ -363,9 +405,11 @@ importers:
         specifier: ^15.5.13
         version: 15.5.13
 
-  libs/ui/sidebar: {}
-
   tests/e2e/backend: {}
+
+  tests/e2e/contextprism: {}
+
+  tests/e2e/todo: {}
 
 packages:
 

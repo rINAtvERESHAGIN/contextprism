@@ -1,5 +1,8 @@
 {
   "name": "@contextprism/contextprism",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "dependencies":{
+    "@contextprisme/sidebar":"workspace:*"
+  }
 }

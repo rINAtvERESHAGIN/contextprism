@@ -4,22 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/contextprism-e2e"
-    },
-    {
       "path": "./apps/contextprism"
     },
     {
-      "path": "./apps/examples/todo-e2e"
-    },
-    {
       "path": "./apps/examples/todo"
-    },
-    {
-      "path": "./apps/whisper-proxy-e2e"
-    },
-    {
-      "path": "./apps/whisper-proxy"
     },
     {
       "path": "./libs/aiui"
@@ -32,6 +20,21 @@
     },
     {
       "path": "./libs/tools"
+    },
+    {
+      "path": "./libs/aiApiSdk"
+    },
+    {
+      "path": "./tests/e2e/contextprism"
+    },
+    {
+      "path": "./tests/e2e/backend"
+    },
+    {
+      "path": "./tests/e2e/todo"
+    },
+    {
+      "path": "./backend"
     }
   ]
 }

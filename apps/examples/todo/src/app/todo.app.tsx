@@ -15,8 +15,8 @@ import { withLogging } from '../ai/hocs';
 import { useTodoStore } from './store';
 import { useToContextPrism } from '../ai/collectors/hooks.collectors';
 import { useState } from 'react';
-import { withAiSidebar } from '../features/ai-connector/WithAiSidebar.hoc';
 import { AiUi } from '@contextprism/aiui';
+import { withAiSidebar } from '@contextprisme/sidebar';
 
 export const TodoAppWithAi = withAiSidebar(TodoApp);
 

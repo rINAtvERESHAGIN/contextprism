@@ -1,5 +1,3 @@
-// Sidebar.tsx
-import { useEffect, useRef } from 'react';
 import { Button, Divider } from '@mui/material';
 import { useChat } from '@ai-sdk/react';
 import {
@@ -8,15 +6,15 @@ import {
 } from 'ai';
 import { Title } from './Title.Sidebar';
 import styled from 'styled-components';
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useWatch,
-} from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { SearchInput } from '../form/SearchInput';
-import { ChatMessagesRoot } from '../../../../../../../libs/ui/chat/src/entities/ChatMessagesRoot/ChatMessagesRoot';
-import { Snippet, SnippetAddon, SnippetCopyButton, SnippetInput } from '@contextprism/aiui';
+
+import {
+  Snippet,
+  SnippetAddon,
+  SnippetCopyButton,
+  SnippetInput,
+} from '@contextprism/aiui';
 
 interface SidebarProps {
   // Можно передать open и onClose, если нужен временный режим
@@ -64,7 +62,6 @@ interface SidebarFormValues {
 }
 
 export function Sidebar({}: SidebarProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const { messages, sendMessage, status, addToolOutput } = useChat({
     transport: new DefaultChatTransport({
       api: '/hono/api/llm/chat',
@@ -72,7 +69,6 @@ export function Sidebar({}: SidebarProps) {
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
 
     async onToolCall({ toolCall }) {
-      // Check if it's a dynamic tool first for proper type narrowing
       if (toolCall.dynamic) {
         return;
       }
@@ -80,7 +76,6 @@ export function Sidebar({}: SidebarProps) {
       if (toolCall.toolName === 'getLocation') {
         const cities = ['New York', 'Los Angeles', 'Chicago', 'San Francisco'];
 
-        // No await - avoids potential deadlocks
         addToolOutput({
           tool: 'getLocation',
           toolCallId: toolCall.toolCallId,
@@ -98,24 +93,16 @@ export function Sidebar({}: SidebarProps) {
     },
   });
 
-  const llmModel = useWatch({ name: 'llmModel', control: methods.control });
-
   const onSubmit: SubmitHandler<SidebarFormValues> = data => {
-    console.log('on submit', data);
     const { search } = data;
-    console.log(search, 'on submit');
     if (search.trim()) {
-      /**
+      /** NOTICE:
        * https://ai-sdk.dev/docs/ai-sdk-ui/chatbot#setting-custom-body-fields-per-request
        */
       sendMessage({ text: search }, { body: { model: data.llmModel } });
       methods.setValue('search', '');
     }
   };
-
-  useEffect(() => {
-    console.log('llmModel', llmModel);
-  }, [llmModel]);
 
   return (
     <FormProvider {...methods}>
@@ -139,8 +126,6 @@ export function Sidebar({}: SidebarProps) {
               addToolOutput={addToolOutput}
               messages={messages}
             />
-            {/* <MessageList addToolOutput={addToolOutput} messages={messages} /> */}
-            <div ref={scrollRef} />
           </MessagesChatLayout>
         </MainLayout>
         <Button

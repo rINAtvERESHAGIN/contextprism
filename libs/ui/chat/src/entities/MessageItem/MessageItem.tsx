@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
-
-import { cn } from '../../../../../../apps/examples/todo/src/shared/tools';
 import { Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 import { UIMessage } from 'ai';
 import { MessageBubble } from '../MessageBubble/Bubble';
+import { cn } from '../../shared/utils/cn';
 
 export function MessageItem({
   message,

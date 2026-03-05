@@ -1,6 +1,6 @@
 import { Group, Panel } from 'react-resizable-panels';
 import { Sidebar } from '../sidebar/ui/Sidebar';
-import { FC, PropsWithChildren, ReactNode } from 'react';
+import { FC, PropsWithChildren,  } from 'react';
 import styled from 'styled-components';
 import { StyledSeparator } from '../../shared/styled-ui/Separator';
 import { HandleLine } from '../../shared/styled-ui/HandleLine';
