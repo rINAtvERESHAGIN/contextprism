@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import { cn } from '../../../../shared/tools';
+import { cn } from '../../../../../../apps/examples/todo/src/shared/tools';
 import { Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 import { UIMessage } from 'ai';

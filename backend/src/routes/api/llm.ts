@@ -41,7 +41,7 @@ app.post('/chat', async ({ req }) => {
       description: 'show the weather in a given city to the user',
       inputSchema: z.object({ city: z.string() }),
       execute: async ({}: { city: string }) => {
-        const weatherOptions = ['sunny', 'cloudy', 'rainy', 'snowy', 'windy'];
+        const weatherOptions = ['windy'];
         return weatherOptions[
           Math.floor(Math.random() * weatherOptions.length)
         ];
@@ -121,7 +121,7 @@ app.post('/chat', async ({ req }) => {
     // model: ollama('qwen3-vl:8b'),
     model: ollama(model),
     messages: await convertToModelMessages(messages),
-    // tools,
+    tools,
     system,
   });
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run:todo:dev": "nx run todo:dev",
+    "run:todo:dev": "nx run todo:dev & nx run whisper-proxy:dev",
     "whisper-proxy:dev": "nx run whisper-proxy:dev"
   },
   "private": true,

@@ -3,4 +3,6 @@ packages:
   - 'apps/examples/*'
   - 'libs/*'
   - 'libs/ui/*'
+  - 'backend'
+  - 'tests/e2e/*'
 autoInstallPeers: true

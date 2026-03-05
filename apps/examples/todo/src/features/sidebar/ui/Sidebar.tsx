@@ -15,7 +15,7 @@ import {
   useWatch,
 } from 'react-hook-form';
 import { SearchInput } from '../form/SearchInput';
-import { ChatMessagesRoot } from '../entities/ChatMessagesRoot/ChatMessagesRoot';
+import { ChatMessagesRoot } from '../../../../../../../libs/ui/chat/src/entities/ChatMessagesRoot/ChatMessagesRoot';
 import { Snippet, SnippetAddon, SnippetCopyButton, SnippetInput } from '@contextprism/aiui';
 
 interface SidebarProps {

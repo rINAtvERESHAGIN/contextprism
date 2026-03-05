@@ -4,9 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
-import { cn } from '../../../../shared/tools';
 import { MessagePartsRenderer } from '../MessagePartsRenderer/MessagePartsRenderer';
-
+import { cn } from '../../shared/utils/cn';
 
 export function MessageBubble({
   message,

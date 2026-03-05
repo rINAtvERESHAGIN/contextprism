@@ -190,6 +190,9 @@ importers:
       '@contextprism/aiui':
         specifier: workspace:*
         version: link:../../../libs/aiui
+      '@contextprism/contextprism':
+        specifier: workspace:*
+        version: link:../../contextprism
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.2.14)(react@19.2.4)
@@ -248,7 +251,7 @@ importers:
 
   apps/examples/todo-e2e: {}
 
-  apps/whisper-proxy:
+  backend:
     dependencies:
       '@hono/node-server':
         specifier: ^1.19.9
@@ -268,8 +271,6 @@ importers:
       zod:
         specifier: ^4.3.6
         version: 4.3.6
-
-  apps/whisper-proxy-e2e: {}
 
   libs/aiui:
     dependencies:
@@ -328,9 +329,43 @@ importers:
 
   libs/tools: {}
 
-  libs/ui/chat: {}
+  libs/ui/chat:
+    dependencies:
+      '@contextprism/aiui':
+        specifier: workspace:*
+        version: link:../../aiui
+      ai:
+        specifier: ^6.0.105
+        version: 6.0.105(zod@4.3.6)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      framer-motion:
+        specifier: ^12.34.3
+        version: 12.34.3(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      lucide-react:
+        specifier: ^0.576.0
+        version: 0.576.0(react@19.2.4)
+      react-markdown:
+        specifier: ^10.1.0
+        version: 10.1.0(@types/react@19.2.14)(react@19.2.4)
+      react-syntax-highlighter:
+        specifier: ^16.1.1
+        version: 16.1.1(react@19.2.4)
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
+      tailwind-merge:
+        specifier: ^3.5.0
+        version: 3.5.0
+    devDependencies:
+      '@types/react-syntax-highlighter':
+        specifier: ^15.5.13
+        version: 15.5.13
 
   libs/ui/sidebar: {}
+
+  tests/e2e/backend: {}
 
 packages:
 

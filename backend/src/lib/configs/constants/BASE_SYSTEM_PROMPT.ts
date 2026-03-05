@@ -1,4 +1,4 @@
-import type { SystemModelMessage } from "ai";
+import type { SystemModelMessage } from 'ai';
 
 export const BASE_SYSTEM_PROMPT: SystemModelMessage = {
   role: 'system',
