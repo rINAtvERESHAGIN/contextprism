@@ -12,34 +12,32 @@ import {
   EmptyMessage as TEmptyMessage,
 } from '../shared/components-ui';
 import { withLogging } from '../ai/hocs';
+import { withAiSidebar } from '@contexprism/ai-sidebar';
+
+import { useState } from 'react';
 import { useTodoStore } from './store';
 import { useToContextPrism } from '../ai/collectors/hooks.collectors';
-import { useState } from 'react';
-import { AiUi } from '@contextprism/aiui';
-import { withAiSidebar } from '@contextprisme/sidebar';
 
-export const TodoAppWithAi = withAiSidebar(TodoApp);
 
+const Card = withLogging(TCard, 'TCard', 'others');
 const Title = withLogging(TTitle, 'Title', 'Обычный заголовок');
 const AddButton = withLogging(TAddButton, 'AddButton', 'Кнопка добавить');
+
 const TaskList = withLogging(TTaskList, 'TaskList', 'others');
 const TaskItem = withLogging(TTaskItem, 'TaskItem', 'others');
 const TaskText = withLogging(TTaskText, 'TaskText', 'others');
 const DeleteButton = withLogging(TDeleteButton, 'DeleteButton', 'others');
 const EmptyMessage = withLogging(TEmptyMessage, 'EmptyMessage', 'others');
-const Card = withLogging(TCard, 'TCard', 'others');
 
-console.log(AiUi);
-
-export function TodoApp() {
+export const TodoApp = withAiSidebar(function TodoAppOriginal() {
   const { tasks, addTask, toggleTask, removeTask } = useTodoStore();
   const [input, setInput] = useState<string>('');
 
-  // useToContextPrism<typeof tasks>({
-  //   name: 'tasks',
-  //   value: tasks,
-  //   config: { descriptions: 'Hello soo' },
-  // });
+  useToContextPrism<typeof tasks>({
+    name: 'tasks',
+    value: tasks,
+    config: { descriptions: 'Hello soo' },
+  });
   useToContextPrism<typeof tasks>('tasks', tasks, {
     descriptions: 'Hello soo',
   });
@@ -97,6 +95,4 @@ export function TodoApp() {
       </Card>
     </AppWrapper>
   );
-}
-
-// export const TodoAppWithAi = TodoApp;
+});

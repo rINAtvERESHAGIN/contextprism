@@ -1,17 +1,24 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TodoAppWithAi } from './todo.app';
-import { Conversation } from '@contextprism/aiui';
-import '@contextprism/aiui/ai-ui-theme.css';
+// import { TodoApp } from './todo.app';
+// import { Weed as word, withAiSidebar } from '@contexprism/ai-sidebar';
+// import css from '@contextprism/aiui/index.css';
 // ─── Component ───────────────────────────────────────────────────────
 // styles
 const queryClient = new QueryClient();
 
+// const We = withAiSidebar(() => {
+//   return <div>We3</div>;
+// });
+
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Conversation children={undefined} />
-      <TodoAppWithAi />
+      hello
+      {/* {Weed} */}
+      {/* <TodoApp /> */}
+      {/* <We /> */}
+      {/* {word} */}
     </QueryClientProvider>
   );
 };
