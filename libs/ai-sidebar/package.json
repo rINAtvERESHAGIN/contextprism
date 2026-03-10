@@ -26,6 +26,6 @@
   "devDependencies": {
     "@contextprism/ai-chat": "workspace:*",
     "@contextprism/ai-fetch": "workspace:*",
-    "@contextprism/ai-uikit": "workspace:*"
+    "@contextprism/ai-components": "workspace:*"
   }
 }

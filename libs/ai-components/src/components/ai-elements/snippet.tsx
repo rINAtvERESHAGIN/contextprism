@@ -1,13 +1,4 @@
 import type { ComponentProps } from 'react';
-
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  InputGroupText,
-} from '@/components/ui/input-group';
-import { cn } from '@/lib/utils';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import {
   createContext,
@@ -17,6 +8,14 @@ import {
   useRef,
   useState,
 } from 'react';
+import { cn } from '../../lib/utils';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupInput,
+  InputGroupButton,
+} from '../ui/input-group';
 
 interface SnippetContextType {
   code: string;

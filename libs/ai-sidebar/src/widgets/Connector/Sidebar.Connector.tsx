@@ -1,6 +1,5 @@
 import { Sidebar } from '../../main';
 import { PanelContainer } from './ui';
-// import '@contextprism/ai-uikit/index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 export interface WithAiSidebarProps {
   enabled?: false;

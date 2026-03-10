@@ -13,9 +13,6 @@
       "path": "./backend"
     },
     {
-      "path": "./libs/ai-uikit"
-    },
-    {
       "path": "./libs/ai-chat"
     },
     {
@@ -26,6 +23,9 @@
     },
     {
       "path": "./libs/ai-fetch"
+    },
+    {
+      "path": "./libs/ai-components"
     }
   ]
 }

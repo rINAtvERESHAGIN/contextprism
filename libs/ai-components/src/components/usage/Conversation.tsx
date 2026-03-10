@@ -51,7 +51,7 @@ export function ConversationComponent({
               ))
             )}
           </ConversationContent>
-          <ConversationDownload messages={messages} />
+          {/* <ConversationDownload messages={messages} /> */}
           <ConversationScrollButton />
         </Conversation>
       </div>
