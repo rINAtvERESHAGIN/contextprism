@@ -244,9 +244,21 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1
     devDependencies:
+      '@contextprism/ai-cooperation':
+        specifier: workspace:*
+        version: link:../../../libs/ai-cooperation
+      '@contextprisme/tools':
+        specifier: workspace:*
+        version: link:../../../libs/tools
       '@types/react-syntax-highlighter':
         specifier: ^15.5.13
         version: 15.5.13
+
+  apps/todo:
+    devDependencies:
+      '@contextprism/ai-sidebar':
+        specifier: workspace:*
+        version: link:../../libs/ai-sidebar
 
   backend:
     dependencies:
@@ -335,6 +347,9 @@ importers:
       '@mui/material':
         specifier: ^7.3.8
         version: 7.3.8(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-query':
+        specifier: ^5.90.21
+        version: 5.90.21(react@19.2.4)
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -347,6 +362,34 @@ importers:
       react-resizable-panels:
         specifier: ^4.7.0
         version: 4.7.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+
+  libs/ai-sidebar:
+    dependencies:
+      '@mui/icons-material':
+        specifier: ^7.3.8
+        version: 7.3.8(@mui/material@7.3.8(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.2.14)(react@19.2.4)
+      '@mui/material':
+        specifier: ^7.3.8
+        version: 7.3.8(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react@19.2.4))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-query':
+        specifier: ^5.90.21
+        version: 5.90.21(react@19.2.4)
+      react-hook-form:
+        specifier: ^7.71.2
+        version: 7.71.2(react@19.2.4)
+      react-resizable-panels:
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+    devDependencies:
+      '@contextprism/ai-api':
+        specifier: workspace:*
+        version: link:../ai-api
+      '@contextprism/ai-chat':
+        specifier: workspace:*
+        version: link:../ai-chat
+      '@contextprism/ai-uikit':
+        specifier: workspace:*
+        version: link:../ai-uikit
 
   libs/ai-uikit:
     dependencies:

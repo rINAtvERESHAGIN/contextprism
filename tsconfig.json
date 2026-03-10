@@ -16,19 +16,19 @@
       "path": "./tests/e2e/backend"
     },
     {
-      "path": "./tests/e2e/todo"
-    },
-    {
       "path": "./backend"
-    },
-    {
-      "path": "./libs/ai-cooperation"
     },
     {
       "path": "./libs/ai-uikit"
     },
     {
       "path": "./libs/ai-chat"
+    },
+    {
+      "path": "./apps/todo"
+    },
+    {
+      "path": "./libs/ai-sidebar"
     }
   ]
 }
