@@ -4,6 +4,7 @@ import {
   lastAssistantMessageIsCompleteWithToolCalls,
 } from 'ai';
 
+
 export function useOurChat() {
   const chat = useChat({
     transport: new DefaultChatTransport({

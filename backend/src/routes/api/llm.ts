@@ -121,7 +121,7 @@ app.post('/chat', async ({ req }) => {
     // model: ollama('qwen3-vl:8b'),
     model: ollama(model),
     messages: await convertToModelMessages(messages),
-    tools,
+    // tools,
     system,
   });
 

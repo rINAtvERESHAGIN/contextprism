@@ -5,4 +5,5 @@ packages:
   - 'libs/ui/*'
   - 'backend'
   - 'tests/e2e/*'
+  - 'tools/*'
 autoInstallPeers: true

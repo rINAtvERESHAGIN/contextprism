@@ -31,13 +31,13 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
-      "path": "../ai-chat/tsconfig.lib.json"
-    },
-    {
-      "path": "../ai-api/tsconfig.lib.json"
-    },
-    {
       "path": "../ai-uikit/tsconfig.lib.json"
+    },
+    {
+      "path": "../ai-fetch/tsconfig.lib.json"
+    },
+    {
+      "path": "../ai-chat/tsconfig.lib.json"
     }
   ]
 }

@@ -7,9 +7,6 @@
       "path": "./libs/tools"
     },
     {
-      "path": "./libs/ai-api"
-    },
-    {
       "path": "./tests/e2e/backend"
     },
     {
@@ -26,6 +23,12 @@
     },
     {
       "path": "./libs/ai-sidebar"
+    },
+    {
+      "path": "./libs/ai-fetch"
+    },
+    {
+      "path": "./libs/ui-kit"
     }
   ]
 }
