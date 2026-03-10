@@ -205,9 +205,6 @@ importers:
       '@contextprism/ai-sidebar':
         specifier: workspace:*
         version: link:../../libs/ai-sidebar
-      '@contextprism/ui-kit':
-        specifier: workspace:*
-        version: link:../../libs/ui-kit
 
   backend:
     dependencies:

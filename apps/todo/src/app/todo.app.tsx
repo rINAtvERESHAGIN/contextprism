@@ -17,7 +17,6 @@ import { useState } from 'react';
 import { useTodoStore } from './store';
 import { useToContextPrism } from '../ai/collectors/hooks.collectors';
 import { withAiSidebar } from '@contextprism/ai-sidebar';
-import { Button } from '@contextprism/ui-kit';
 
 const Card = withLogging(TCard, 'TCard', 'others');
 const Title = withLogging(TTitle, 'Title', 'Обычный заголовок');
@@ -60,7 +59,6 @@ export function TodoAppOriginal() {
     <AppWrapper className='bg-red-300 p-5'>
       <Card>
         <Title>Мои дела</Title>
-        <Button variant='outline'>Button</Button>
         <InputRow>
           <StyledInput
             type='text'

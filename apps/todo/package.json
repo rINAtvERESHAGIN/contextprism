@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "@contextprism/ai-sidebar": "workspace:*",
-    "@contextprism/ui-kit": "workspace:*"
+    "@contextprism/ai-sidebar": "workspace:*"
   },
   "dependencies": {
     "@juristr/nx-tailwind-sync": "^0.0.9",
