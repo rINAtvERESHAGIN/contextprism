@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:todo": "nx run @contextprism/todo:dev"
+    "dev:todo": "nx run @contextprism/todo:dev",
+    "dev:backend": "nx run whisper-proxy:dev"
   },
   "private": true,
   "dependencies": {

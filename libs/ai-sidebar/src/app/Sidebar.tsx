@@ -1,12 +1,14 @@
 // Sidebar.tsx
 import { Button, Divider } from '@mui/material';
 import { Title } from '../entities/Title.Sidebar';
-import { useWatch } from 'react-hook-form';
-import { useGetModelsList, useOurChat } from '@contextprism/ai-api';
+import { useGetModelsList, useMod, useOurChat } from '@contextprism/ai-api';
 import { SidebarLayout } from './ui/SidebarLayout';
 import { ToggleLlmModel } from '../features/ToggleModel';
 import { SidebarForm } from './Sidebar.Form';
 import { SearchInput } from '../features/SearchInput';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useSidebarStore } from './store';
 
 interface SidebarProps {
   model?: string;
@@ -17,15 +19,41 @@ interface SidebarFormValues {
   search: '';
 }
 
+export const useGetsList = () => {
+  // return {data:'data:::useGetModelsList'}
+  const query = useQuery({
+    queryKey: ['models'],
+    queryFn: async () => {
+      const response = await fetch('/hono/api/llm/models');
+
+      if (!response.ok) {
+        throw new Error('Getting Error while Fetching models list');
+      }
+
+      return await response.json();
+    },
+    select(data) {
+      console.log('select:::data:::', data);
+      return Array.isArray(data.models) ? data.models : [];
+    },
+  });
+
+  return query;
+};
+
 export function Sidebar({}: SidebarProps) {
-  const { data } = useGetModelsList();
+  
+  const { data } = useGetsList();
 
-  const { messages, sendMessage, status, addToolOutput } = useOurChat();
+  useEffect(() => {
+    console.log('data fetched', data);
+  }, [data]);
 
-  const llmModel = useWatch({ name: 'llmModel', control: methods.control });
+  // const { messages, sendMessage, status, addToolOutput } = useOurChat();
 
   function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
-    sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
+    setLastUserLLM(searchAiInput)
+    // sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
   }
 
   return (
@@ -33,7 +61,9 @@ export function Sidebar({}: SidebarProps) {
       <SidebarLayout>
         <SidebarLayout.TitleLayout>
           <Title />
-          <ToggleLlmModel name='llmModel' models={data} />
+          {data && Array.isArray(data) && data.length > 0 && (
+            <ToggleLlmModel name='llmModel' models={data} />
+          )}
         </SidebarLayout.TitleLayout>
 
         <SidebarLayout.InputLayout>

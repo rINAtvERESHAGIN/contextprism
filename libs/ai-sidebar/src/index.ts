@@ -1,7 +1,5 @@
+export { Sidebar } from './app/Sidebar';
+
+export { PanelContainer } from './widgets/Connector/ui';
 export { withAiSidebar } from './widgets/Connector/Sidebar.Connector';
-
-
-
-export const Weed = 'Weed12341234||||||';
-
-export { Comp } from './comp';
+export { useSidebarStore,useSidebarApi } from './hocs';

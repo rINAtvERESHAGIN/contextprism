@@ -15,7 +15,7 @@ type MessageMap = {
   [K in Message as Lowercase<K['role']>]: K;
 };
 
-const BASE_URL = 'http://192.168.1.17:11434';
+const BASE_URL = 'http://192.168.1.8:11434';
 // Schema
 const requestBodySchema = z.object({
   userMessage: z.string().min(1, {

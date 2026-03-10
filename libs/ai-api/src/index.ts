@@ -1,2 +1,2 @@
-export * from './hooks/index.js';
-export * from './useGetModelsList.js'
+export { useOurChat } from './hooks/index.js';
+export { useGetModelsList, useMod } from './useGetModelsList.js';

@@ -25,7 +25,7 @@ app.use(
 );
 // ---Routes
 app.route('/hono/api/hello', helloWorldRoutes);
-app.route('hono/api/llm/', llm);
+app.route('/hono/api/llm/', llm);
 
 app.use(prettyJSON());
 // ---Running server

@@ -15,7 +15,7 @@ export function withAiSidebar<P extends Record<string, unknown>>(
     const { enabled, ...rest } = props as P & WithAiSidebarProps;
     return (
       <QueryClientProvider client={queryClient}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         {/* <PanelContainer sidebar={<Sidebar />}> */}
           <div style={{ backgroundColor: 'red' }}>
             {/* <Sidebar /> */}

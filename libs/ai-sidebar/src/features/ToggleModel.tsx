@@ -5,6 +5,7 @@ import type {
   SelectProps,
 } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
+import { useSidebarStore } from '../app/store';
 
 interface Model {
   name: string;
@@ -22,6 +23,9 @@ interface Model {
   };
 }
 
+//  TODO перенести сюда загрузку модели и установка дефолтной
+// TODO добавить zustand чтобы сделать persist
+
 export const ToggleLlmModel = ({
   models,
   name,
@@ -36,6 +40,7 @@ export const ToggleLlmModel = ({
   selectProps?: SelectProps;
 }) => {
   const { control } = useFormContext();
+  const { setLastUserLLM } = useSidebarStore();
   if (!models) return;
   return (
     <FormControl fullWidth {...formControlProps}>
@@ -52,7 +57,10 @@ export const ToggleLlmModel = ({
             id='llm-model-select'
             value={value}
             label='Select LLM Model'
-            onChange={onChange}
+            onChange={event => {
+              setLastUserLLM(event.target.value);
+              onChange(event);
+            }}
             {...selectProps}
           >
             {models.map(model => (

@@ -28,7 +28,7 @@ const TaskText = withLogging(TTaskText, 'TaskText', 'others');
 const DeleteButton = withLogging(TDeleteButton, 'DeleteButton', 'others');
 const EmptyMessage = withLogging(TEmptyMessage, 'EmptyMessage', 'others');
 
-export const TodoApp = withAiSidebar(function TodoAppOriginal() {
+export function TodoAppOriginal() {
   const { tasks, addTask, toggleTask, removeTask } = useTodoStore();
   const [input, setInput] = useState<string>('');
 
@@ -94,4 +94,6 @@ export const TodoApp = withAiSidebar(function TodoAppOriginal() {
       </Card>
     </AppWrapper>
   );
-});
+}
+
+export const TodoApp = withAiSidebar(TodoAppOriginal);

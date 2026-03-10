@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { useSidebarStore } from './store';
 
 interface SidebarFormValues {
-  llmModel: '';
-  search: '';
+  llmModel: string;
+  search: string;
 }
 
 const Form = styled('form')`
@@ -22,10 +23,12 @@ export function SidebarForm({
   children,
   onSubmit,
 }: PropsWithChildren<SidebarFormProps>) {
+  const { lastUserLLM } = useSidebarStore();
+
   const methods = useForm<SidebarFormValues>({
     mode: 'onChange',
     defaultValues: {
-      llmModel: '',
+      llmModel: lastUserLLM,
       search: '',
     },
   });
