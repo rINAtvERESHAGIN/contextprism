@@ -26,6 +26,9 @@
     },
     {
       "path": "./libs/ai-components"
+    },
+    {
+      "path": "./apps/form"
     }
   ]
 }

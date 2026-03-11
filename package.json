@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev:todo": "nx run @contextprism/todo:dev",
-    "dev:backend": "nx run whisper-proxy:dev"
+    "dev:backend": "nx run whisper-proxy:dev",
+    "run:form":"nx run @contextprism/form:dev "
   },
   "private": true,
   "dependencies": {

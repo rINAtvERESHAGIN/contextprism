@@ -1,0 +1,9 @@
+{
+  "name": "@contextprism/form",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/form/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project @contextprism/form --web",
+  "targets": {}
+}
