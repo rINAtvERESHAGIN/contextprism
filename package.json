@@ -8,6 +8,8 @@
   },
   "private": true,
   "dependencies": {
+    "@ai-sdk/react": "^3.0.107",
+    "ai": "^6.0.105",
     "lodash": "^4.17.23",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

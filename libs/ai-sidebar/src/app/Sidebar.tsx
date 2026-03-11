@@ -1,4 +1,4 @@
-import { useGetModelsList, useOurChat } from '@contextprism/ai-fetch';
+import { useOurChat } from '@contextprism/ai-fetch';
 import { ConversationComponent } from '@contextprism/ai-components';
 import { Divider, Button } from '@mui/material';
 import { Title } from '../entities/Title.Sidebar';
@@ -16,9 +16,10 @@ interface SidebarFormValues {
   search: '';
 }
 
-export function Sidebar({}: SidebarProps) {
-  const { data } = useGetModelsList();
 
+function Chat(){}
+
+export function Sidebar({}: SidebarProps) {
   const { messages, sendMessage, status, addToolOutput } = useOurChat();
 
   function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
@@ -29,11 +30,9 @@ export function Sidebar({}: SidebarProps) {
     <div className='bg-red-300 p-4 rounded-3xl'>
       <SidebarForm onSubmit={handleOnSubmitForm}>
         <SidebarLayout>
-           <SidebarLayout.TitleLayout>
+          <SidebarLayout.TitleLayout>
             <Title />
-            {data && Array.isArray(data) && data.length > 0 && (
-              <ToggleLlmModel name='llmModel' models={data} />
-            )}
+            <ToggleLlmModel name='llmModel' />
           </SidebarLayout.TitleLayout>
           <Divider />
           <SidebarLayout.InputLayout>
@@ -43,7 +42,6 @@ export function Sidebar({}: SidebarProps) {
           <SidebarLayout.MessagesChatLayout>
             <ConversationComponent messages={messages} />
           </SidebarLayout.MessagesChatLayout>
-
         </SidebarLayout>
         <Button
           type='submit'

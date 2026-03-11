@@ -5,9 +5,10 @@ import { serve } from '@hono/node-server';
 import { helloWorldRoutes } from './routes/api/hello-worlds';
 import { prettyJSON } from 'hono/pretty-json';
 import { llm } from './routes/api/llm';
-
+import { logger } from 'hono/logger'
 // ---Init Hono
 const app = new Hono();
+app.use('*',logger());
 // ---Config
 app.use(
   '*',
@@ -28,6 +29,7 @@ app.route('/hono/api/hello', helloWorldRoutes);
 app.route('/hono/api/llm/', llm);
 
 app.use(prettyJSON());
+
 // ---Running server
 serve(
   {

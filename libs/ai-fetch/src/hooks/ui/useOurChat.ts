@@ -1,35 +1,35 @@
-import { useChat } from '@ai-sdk/react';
+import { useChat, UseChatOptions } from '@ai-sdk/react';
 import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls,
+  UIDataTypes,
+  UIMessage,
+  UITools,
 } from 'ai';
 
+export type ChatOptions = UseChatOptions<
+  UIMessage<unknown, UIDataTypes, UITools>
+>;
 
-export function useOurChat() {
-  const chat = useChat({
-    transport: new DefaultChatTransport({
-      api: '/hono/api/llm/chat',
-    }),
-    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+export const useCh = useChat;
 
-    async onToolCall({ toolCall }) {
-      // Check if it's a dynamic tool first for proper type narrowing
-      if (toolCall.dynamic) {
-        return;
-      }
+export function useOurChat(
+  rest: UseChatOptions<UIMessage<unknown, UIDataTypes, UITools>>
+) {
 
-      if (toolCall.toolName === 'getLocation') {
-        const cities = ['New York', 'Los Angeles', 'Chicago', 'San Francisco'];
-
-        // No await - avoids potential deadlocks
-        chat.addToolOutput({
-          tool: 'getLocation',
-          toolCallId: toolCall.toolCallId,
-          output: cities[Math.floor(Math.random() * cities.length)],
-        });
-      }
+const cc = useChat()
+  const chat = useChat(
+    {
+      transport: new DefaultChatTransport({
+        api: '/hono/api/llm/chat',
+      }),
+      sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+      ...rest,
     },
-  });
+    async () => {
+      console.warn('Check, its empty func in useChat called hook');
+    }
+  );
 
   return chat;
 }

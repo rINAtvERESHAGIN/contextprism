@@ -32,7 +32,7 @@ export function useToContextPrism<T>(
   );
 
   useEffect(() => {
-    console.log('userContext', userContext);
+    // console.log('userContext', userContext);
   }, [userContext]);
 
   useEffect(() => {

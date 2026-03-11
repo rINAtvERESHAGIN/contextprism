@@ -7,6 +7,8 @@ import {
   UIMessage,
   streamText as streamTextAi,
 } from 'ai';
+import { systemPromtsBase } from '../../configs/system.promts';
+import { toolsTodoApp } from '../../tools';
 
 type Body = Parameters<typeof streamText>[number];
 type Message = NonNullable<Body['messages']>[0];
@@ -35,94 +37,42 @@ const ollama = createOllama({ baseURL: BASE_URL });
 app.post('/chat', async ({ req }) => {
   const { messages, model }: { messages: UIMessage[]; model: string } =
     await req.json();
-  const tools = {
-    // server-side tool with execute function:
-    getWeatherInformation: {
-      description: 'show the weather in a given city to the user',
-      inputSchema: z.object({ city: z.string() }),
-      execute: async ({}: { city: string }) => {
-        const weatherOptions = ['windy'];
-        return weatherOptions[
-          Math.floor(Math.random() * weatherOptions.length)
-        ];
-      },
-    },
-    // client-side tool that starts user interaction:
-    askForConfirmation: {
-      description: 'Ask the user for confirmation.',
-      inputSchema: z.object({
-        message: z.string().describe('The message to ask for confirmation.'),
-      }),
-    },
-    // client-side tool that is automatically executed on the client:
-    getLocation: {
-      description:
-        'Get the user location. Always ask for confirmation before using this tool.',
-      inputSchema: z.object({}),
-    },
-  };
-  const system = [
-    {
-      role: 'system',
-      content:
-        'Всегда отвечай на русском языке, можно использовать англицизмы и не переводимые слова!',
-    },
-    {
-      role: 'system',
-      content: [
-        'Ты отвечаешь **максимально кратко и прямо**.',
-        'Запрещено:',
-        '- использовать <think>',
-        '- писать внутренние рассуждения',
-        '- объяснять ход мыслей',
-        '- писать Давай подумаем',
-        'Сначала разберёмся и любые преамбулы',
-        'Отвечай **только финальным ответом**, без единого лишнего слова.',
-        'Начинай сразу с сути.',
-      ].join('\n'),
-    },
-    {
-      role: 'system',
-      content: [
-        'Ты — полезный и точный помощник.',
-        'Отвечай **исключительно** в хорошо структурированном Markdown.\n',
-        '\n',
-        'Обязательные правила:\n',
-        '\n',
-        '- Начинай ответ с заголовка ## (например ## Ответ, ## Решение, ## Объяснение)',
-        '- Используй ### для подзаголовков',
-        '- **Жирный** — для важных слов и терминов',
-        '- *Курсив* — для выделения мыслей или названий',
-        '- Нумерованные списки — для шагов и последовательностей',
-        '- Маркированные списки — для перечислений',
-        '- Таблицы — когда нужно сравнивать или показывать данные',
-        '- **Код, команды, JSON, конфиги** — всегда внутри fenced блоков с указанием языка:',
-        '',
-        '```typescript',
-        '// пример',
-        'const x = 10;',
-        '```',
-        '',
-        '```bash',
-        'npm install ai',
-        '```',
-        '',
-        '- Никогда не пиши код без указания языка после ```',
-        '- Не используй тройные обратные кавычки внутри других тройных кавычек',
-        '- Не добавляй вступительные фразы типа «Конечно», «Вот ответ», «Я думаю»',
-        '- Если ответ длинный — разбивай на логические блоки с заголовками',
-        '',
-        'Отвечай строго по этим правилам.',
-      ].join('\n'),
-    },
-  ];
+
+  // const system = [...Object.values(systemPromtsBase)];
+  // const system = [
+  //   systemPromtsBase['speak-russian'],
+  //   systemPromtsBase['useful-assistant'],
+  // ];
+
   const result = streamTextAi({
-    // model: ollama('gemma3:1b'),
-    // model: ollama('qwen3-vl:8b'),
     model: ollama(model),
     messages: await convertToModelMessages(messages),
-    // tools,
-    system,
+    tools: {
+      // Пример инструмента, выполняющегося на сервере (получение погоды)
+      getWeather: {
+        description: 'Получить текущую погоду для указанного города',
+        parameters: z.object({
+          city: z.string().describe('Название города'),
+        }),
+        execute: async ({ city }) => {
+          // Здесь можно сделать реальный запрос к API погоды
+          const weather = `Солнечно, +22°C в городе ${city}`;
+          return weather;
+        },
+      },
+      // Пример инструмента, который будет выполняться на клиенте (отправка email)
+      sendEmail: {
+        description: 'Отправить email получателю',
+        parameters: z.object({
+          to: z.string().email(),
+          subject: z.string(),
+          body: z.string(),
+        }),
+        // execute отсутствует — вызов будет отправлен клиенту
+      },
+    },
+    // tools: {...toolsTodoApp},
+    // system,
   });
 
   return result.toUIMessageStreamResponse();

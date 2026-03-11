@@ -6,6 +6,7 @@ import type {
 } from '@mui/material';
 import { useFormContext, Controller } from 'react-hook-form';
 import { useSidebarStore } from '../app/store';
+import { useGetModelsList } from '@contextprism/ai-fetch';
 
 interface Model {
   name: string;
@@ -27,13 +28,11 @@ interface Model {
 // TODO добавить zustand чтобы сделать persist
 
 export const ToggleLlmModel = ({
-  models,
   name,
   formControlProps,
   inputLabelProps,
   selectProps,
 }: {
-  models: Model[];
   name: string;
   formControlProps?: FormControlProps;
   inputLabelProps?: InputLabelProps;
@@ -41,36 +40,41 @@ export const ToggleLlmModel = ({
 }) => {
   const { control } = useFormContext();
   const { setLastUserLLM } = useSidebarStore();
-  if (!models) return;
-  return (
-    <FormControl fullWidth {...formControlProps}>
-      <InputLabel id='llm-model-select-label' {...inputLabelProps}>
-        Select LLM Model
-      </InputLabel>
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={models[0]?.name || ''}
-        render={({ field: { onChange, value } }) => (
-          <Select
-            labelId='llm-model-select-label'
-            id='llm-model-select'
-            value={value}
-            label='Select LLM Model'
-            onChange={event => {
-              setLastUserLLM(event.target.value);
-              onChange(event);
-            }}
-            {...selectProps}
-          >
-            {models.map(model => (
-              <MenuItem key={model.name} value={model.name}>
-                {model.name}
-              </MenuItem>
-            ))}
-          </Select>
-        )}
-      />
-    </FormControl>
-  );
+  const { data } = useGetModelsList();
+  if (!data) return null;
+
+  if (data && Array.isArray(data) && data.length > 0)
+    return (
+      <FormControl fullWidth {...formControlProps}>
+        <InputLabel id='llm-model-select-label' {...inputLabelProps}>
+          Select LLM Model
+        </InputLabel>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={data[0]?.name || ''}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              labelId='llm-model-select-label'
+              id='llm-model-select'
+              value={value}
+              label='Select LLM Model'
+              onChange={event => {
+                setLastUserLLM(event.target.value);
+                onChange(event);
+              }}
+              {...selectProps}
+            >
+              {data.map(model => (
+                <MenuItem key={model.name} value={model.name}>
+                  {model.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+      </FormControl>
+    );
+    
+  return null;
 };

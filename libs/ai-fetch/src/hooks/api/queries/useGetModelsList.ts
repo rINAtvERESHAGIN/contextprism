@@ -15,7 +15,7 @@ export const useGetModelsList = () => {
       return await response.json();
     },
     select(data) {
-      console.log('select:::data:::', data);
+      // console.log('select:::data:::', data);
       return Array.isArray(data.models) ? data.models : [];
     },
   });

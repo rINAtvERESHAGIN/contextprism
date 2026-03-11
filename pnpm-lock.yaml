@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@ai-sdk/react':
+        specifier: ^3.0.107
+        version: 3.0.107(react@19.2.4)(zod@4.3.6)
+      ai:
+        specifier: ^6.0.105
+        version: 6.0.105(zod@4.3.6)
       lodash:
         specifier: ^4.17.23
         version: 4.17.23
