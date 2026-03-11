@@ -1,10 +1,16 @@
-import NxWelcome from './nx-welcome';
+import { PanelContainer, Sidebar } from '@contextprism/ai-sidebar';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title='@contextprism/form' />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <PanelContainer sidebar={<Sidebar />}>
+        {/* <TodoAppOriginal /> */}
+        <div>Future form</div>
+      </PanelContainer>
+    </QueryClientProvider>
   );
 }
 
