@@ -5,3 +5,5 @@ export * from './components/ai-elements/message';
 export * from './components/ai-elements/conversation';
 // Base
 export * from './components/ui/button';
+// Examples
+export * from './components/examples';

@@ -31,6 +31,9 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
+      "path": "../../libs/ai-components/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/ai-sidebar/tsconfig.lib.json"
     }
   ]

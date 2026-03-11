@@ -6,6 +6,7 @@ import { SidebarForm } from './Sidebar.Form';
 import { SidebarLayout } from './ui/SidebarLayout';
 import { ChatUi, useChatCtx } from '@contextprism/ai-chat';
 import { useEffect } from 'react';
+import { PromptInputExample } from '@contextprism/ai-components';
 
 interface SidebarProps {
   model?: string;
@@ -23,7 +24,7 @@ export function Sidebar({}: SidebarProps) {
     console.log('Sidebar:messages', messages);
   }, [messages]);
 
-  
+
   function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
     sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
   }
@@ -43,6 +44,7 @@ export function Sidebar({}: SidebarProps) {
 
           <SidebarLayout.MessagesChatLayout>
             <ChatUi messages={messages} />
+            <PromptInputExample/>
           </SidebarLayout.MessagesChatLayout>
         </SidebarLayout>
         <Button

@@ -59,7 +59,7 @@ export function PanelContainer({
   return (
     <Container>
       <Group orientation='horizontal'>
-        <Panel id='left-ai-chat' collapsible>
+        <Panel id='left-ai-chat' collapsible minSize='80%'>
           {sidebar}
         </Panel>
 
