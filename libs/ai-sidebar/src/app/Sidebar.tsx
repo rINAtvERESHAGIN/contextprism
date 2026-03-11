@@ -1,11 +1,11 @@
-import { useOurChat } from '@contextprism/ai-fetch';
-import { ConversationComponent } from '@contextprism/ai-components';
 import { Divider, Button } from '@mui/material';
 import { Title } from '../entities/Title.Sidebar';
 import { SearchInput } from '../features/SearchInput';
 import { ToggleLlmModel } from '../features/ToggleModel';
 import { SidebarForm } from './Sidebar.Form';
 import { SidebarLayout } from './ui/SidebarLayout';
+import { ChatUi, useChatCtx } from '@contextprism/ai-chat';
+import { useEffect } from 'react';
 
 interface SidebarProps {
   model?: string;
@@ -16,12 +16,14 @@ interface SidebarFormValues {
   search: '';
 }
 
-
-function Chat(){}
-
 export function Sidebar({}: SidebarProps) {
-  const { messages, sendMessage, status, addToolOutput } = useOurChat();
+  const { messages, sendMessage, status, addToolOutput } = useChatCtx();
 
+  useEffect(() => {
+    console.log('Sidebar:messages', messages);
+  }, [messages]);
+
+  
   function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
     sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
   }
@@ -40,7 +42,7 @@ export function Sidebar({}: SidebarProps) {
           </SidebarLayout.InputLayout>
 
           <SidebarLayout.MessagesChatLayout>
-            <ConversationComponent messages={messages} />
+            <ChatUi messages={messages} />
           </SidebarLayout.MessagesChatLayout>
         </SidebarLayout>
         <Button

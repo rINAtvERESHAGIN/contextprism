@@ -1,9 +1,9 @@
-import { UIMessage, UIDataTypes, UITools } from 'ai';
 import {
   Message,
   MessageContent,
   MessageResponse,
-} from '../ai-elements/message';
+} from '@contextprism/ai-components';
+import { UIMessage, UIDataTypes, UITools } from 'ai';
 
 const messageSchema = {
   text: {

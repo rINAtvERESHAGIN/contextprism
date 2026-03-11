@@ -296,6 +296,9 @@ importers:
 
   libs/ai-chat:
     dependencies:
+      '@ai-sdk/react':
+        specifier: ^3.0.107
+        version: 3.0.107(react@19.2.4)(zod@4.3.6)
       ai:
         specifier: ^6.0.105
         version: 6.0.105(zod@4.3.6)
@@ -321,6 +324,12 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
     devDependencies:
+      '@contextprism/ai-components':
+        specifier: workspace:*
+        version: link:../ai-components
+      '@contextprism/ai-fetch':
+        specifier: workspace:*
+        version: link:../ai-fetch
       '@types/react-syntax-highlighter':
         specifier: ^15.5.13
         version: 15.5.13

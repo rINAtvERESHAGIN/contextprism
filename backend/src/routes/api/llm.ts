@@ -47,30 +47,30 @@ app.post('/chat', async ({ req }) => {
   const result = streamTextAi({
     model: ollama(model),
     messages: await convertToModelMessages(messages),
-    tools: {
-      // Пример инструмента, выполняющегося на сервере (получение погоды)
-      getWeather: {
-        description: 'Получить текущую погоду для указанного города',
-        parameters: z.object({
-          city: z.string().describe('Название города'),
-        }),
-        execute: async ({ city }) => {
-          // Здесь можно сделать реальный запрос к API погоды
-          const weather = `Солнечно, +22°C в городе ${city}`;
-          return weather;
-        },
-      },
-      // Пример инструмента, который будет выполняться на клиенте (отправка email)
-      sendEmail: {
-        description: 'Отправить email получателю',
-        parameters: z.object({
-          to: z.string().email(),
-          subject: z.string(),
-          body: z.string(),
-        }),
-        // execute отсутствует — вызов будет отправлен клиенту
-      },
-    },
+    // tools: {
+    //   // Пример инструмента, выполняющегося на сервере (получение погоды)
+    //   getWeather: {
+    //     description: 'Получить текущую погоду для указанного города',
+    //     parameters: z.object({
+    //       city: z.string().describe('Название города'),
+    //     }),
+    //     execute: async ({ city }) => {
+    //       // Здесь можно сделать реальный запрос к API погоды
+    //       const weather = `Солнечно, +22°C в городе ${city}`;
+    //       return weather;
+    //     },
+    //   },
+    //   // Пример инструмента, который будет выполняться на клиенте (отправка email)
+    //   sendEmail: {
+    //     description: 'Отправить email получателю',
+    //     parameters: z.object({
+    //       to: z.string().email(),
+    //       subject: z.string(),
+    //       body: z.string(),
+    //     }),
+    //     // execute отсутствует — вызов будет отправлен клиенту
+    //   },
+    // },
     // tools: {...toolsTodoApp},
     // system,
   });

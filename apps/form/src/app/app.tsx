@@ -7,7 +7,6 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <PanelContainer sidebar={<Sidebar />}>
-        {/* <TodoAppOriginal /> */}
         <div>Future form</div>
       </PanelContainer>
     </QueryClientProvider>

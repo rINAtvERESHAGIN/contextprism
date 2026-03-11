@@ -12,6 +12,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
+    "@ai-sdk/react": "^3.0.107",
     "ai": "^6.0.105",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
@@ -22,6 +23,8 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@contextprism/ai-components": "workspace:*",
+    "@contextprism/ai-fetch": "workspace:*",
     "@types/react-syntax-highlighter": "^15.5.13"
   },
   "nx": {
