@@ -1,2 +1,2 @@
-export { ChatProvider, useChatCtx } from './app/ChatProvider';
-export { ChatUi } from './app/ChatUi';
+export { ChatProvider, useChatCtx } from './app/chat.provider';
+export { AiChat as ChatUi } from './app/chat.export';

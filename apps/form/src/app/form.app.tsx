@@ -7,12 +7,11 @@ const queryClient = new QueryClient();
 export function App() {
   return (
     <Fragment>
-      <Sidebar />
-      {/* <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
         <PanelContainer sidebar={<Sidebar />}>
           <div>Future form</div>
         </PanelContainer>
-      </QueryClientProvider> */}
+      </QueryClientProvider>
     </Fragment>
   );
 }

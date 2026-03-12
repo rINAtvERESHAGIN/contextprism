@@ -1,12 +1,8 @@
-import { Divider, Button } from '@mui/material';
+import { Divider } from '@mui/material';
 import { Title } from '../entities/Title.Sidebar';
-import { SearchInput } from '../features/SearchInput';
-import { ToggleLlmModel } from '../features/ToggleModel';
-import { SidebarForm } from './Sidebar.Form';
 import { SidebarLayout } from './ui/SidebarLayout';
 import { ChatUi, useChatCtx } from '@contextprism/ai-chat';
-import { useEffect } from 'react';
-import { PromptInputExample } from '@contextprism/ai-components';
+import { useQuery } from '@tanstack/react-query';
 
 interface SidebarProps {
   model?: string;
@@ -20,34 +16,21 @@ interface SidebarFormValues {
 export function Sidebar({}: SidebarProps) {
   const { messages, sendMessage, status, addToolOutput } = useChatCtx();
 
-  useEffect(() => {
-    console.log('Sidebar:messages', messages);
-  }, [messages]);
-
-
   function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
     sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
   }
 
   return (
-    <div className='bg-red-300 p-4 rounded-3xl'>
-      <SidebarForm onSubmit={handleOnSubmitForm}>
-        <SidebarLayout>
-          <SidebarLayout.TitleLayout>
-            <Title />
-            <ToggleLlmModel name='llmModel' />
-          </SidebarLayout.TitleLayout>
-          <Divider />
-          <SidebarLayout.InputLayout>
-            <SearchInput />
-          </SidebarLayout.InputLayout>
-
-          <SidebarLayout.MessagesChatLayout>
-            <ChatUi messages={messages} />
-            <PromptInputExample/>
-          </SidebarLayout.MessagesChatLayout>
-        </SidebarLayout>
-        <Button
+    <div className='bg-red-300 p-4 rounded-3xl h-full'>
+      <SidebarLayout>
+        <SidebarLayout.TitleLayout>
+          <Title />
+        </SidebarLayout.TitleLayout>
+        <Divider />
+        {/* <SidebarForm onSubmit={handleOnSubmitForm}> */}
+        <ChatUi messages={messages} />
+      </SidebarLayout>
+      {/* <Button
           type='submit'
           variant='contained'
           color='primary'
@@ -56,7 +39,7 @@ export function Sidebar({}: SidebarProps) {
         >
           Искать
         </Button>
-      </SidebarForm>
+      </SidebarForm> */}
     </div>
   );
 }

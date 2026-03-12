@@ -1,10 +1,17 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
 import { ChatRequestOptions, CreateUIMessage, FileUIPart, UIMessage } from 'ai';
-import { useOChat } from './chat';
+import { useOChat } from './chat.ai-hook';
+import { useGetModelsList } from '@contextprism/ai-fetch';
+import { useChatStore } from './chat.store';
+import { ModelUi } from '@contextprism/ai-components';
 
+export type CtxModels = Record<string, ModelUi>;
 interface ICtxValue {
   status: 'submitted' | 'streaming' | 'ready' | 'error';
   messages: UIMessage[];
+  models: CtxModels;
+  lastUserLLM: ModelUi | undefined;
+  setLastUserLLM: (value: string) => void;
   addToolOutput: (
     options:
       | { tool: string; toolCallId: string; output: unknown }
@@ -37,6 +44,8 @@ interface ICtxValue {
 const ChatAccessCtx = createContext<ICtxValue | undefined>(undefined);
 
 export function ChatProvider({ children }: PropsWithChildren) {
+  const { data: models } = useGetModelsList();
+
   const {
     status,
     messages,
@@ -45,6 +54,8 @@ export function ChatProvider({ children }: PropsWithChildren) {
     addToolApprovalResponse,
   } = useOChat();
 
+  const { lastUserLLM, setLastUserLLM } = useChatStore();
+
   const value = useMemo(() => {
     return {
       status,
@@ -52,8 +63,18 @@ export function ChatProvider({ children }: PropsWithChildren) {
       sendMessage,
       addToolOutput,
       addToolApprovalResponse,
+      models,
+      lastUserLLM,
+      setLastUserLLM,
     };
-  }, []);
+  }, [
+    status,
+    messages,
+    sendMessage,
+    addToolOutput,
+    addToolApprovalResponse,
+    models,
+  ]);
 
   return <ChatAccessCtx value={value}>{children}</ChatAccessCtx>;
 }
@@ -62,6 +83,6 @@ export function useChatCtx() {
   const context = useContext(ChatAccessCtx);
 
   if (!context) throw new Error('Must be in scope of ChatAccessCtx');
-  
+
   return context;
 }

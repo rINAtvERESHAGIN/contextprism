@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { Dispatch, memo, SetStateAction, useCallback, useState } from 'react';
 import {
   ModelSelector,
   ModelSelectorTrigger,
@@ -11,11 +11,11 @@ import {
   ModelSelectorGroup,
   ModelSelectorItem,
   ModelSelectorLogoGroup,
-} from '../ai-elements/model-selector';
-import { PromptInputButton } from '../ai-elements/prompt-input';
+} from '../../ai-elements/model-selector';
+import { PromptInputButton } from '../../ai-elements/prompt-input';
 import { CheckIcon } from 'lucide-react';
 
-export interface Model {
+export interface ModelUi {
   chef: string;
   chefSlug: string;
   id: string;
@@ -30,21 +30,20 @@ export function ToggleModel({
   onOpenChange,
   onSelect,
 }: {
-  open: true;
-  selectedModelData: Model;
-  models: Model[];
-  onOpenChange: () => void;
-  onSelect: () => void;
+  open: boolean;
+  selectedModelData: ModelUi;
+  models: ModelUi[];
+  onOpenChange: Dispatch<SetStateAction<boolean>>;
+  onSelect: (id: string) => void;
 }) {
   return (
-    // <ModelSelector onOpenChange={setModelSelectorOpen} open={modelSelectorOpen}>
     <ModelSelector onOpenChange={onOpenChange} open={open}>
       <ModelSelectorTrigger asChild>
         <PromptInputButton>
-          {selectedModelData?.chefSlug && (
+          {selectedModelData && selectedModelData?.chefSlug && (
             <ModelSelectorLogo provider={selectedModelData.chefSlug} />
           )}
-          {selectedModelData?.name && (
+          {selectedModelData && selectedModelData?.name && (
             <ModelSelectorName>{selectedModelData.name}</ModelSelectorName>
           )}
         </PromptInputButton>
@@ -55,21 +54,16 @@ export function ToggleModel({
 
         <ModelSelectorList>
           <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
-          {['OpenAI', 'Anthropic', 'Google'].map(chef => (
-            <ModelSelectorGroup heading={chef} key={chef}>
-              {models
-                .filter(m => m.chef === chef)
-                .map(m => (
-                  <ModelItem
-                    key={m.id}
-                    m={m}
-                    // onSelect={handleModelSelect}
-                    onSelect={onSelect}
-                    selectedModel={selectedModelData.name}
-                  />
-                ))}
-            </ModelSelectorGroup>
-          ))}
+          <ModelSelectorGroup heading={'llama'}>
+            {models.map(m => (
+              <ModelItem
+                key={m.id}
+                m={m}
+                onSelect={onSelect}
+                selectedModel={selectedModelData && selectedModelData.name}
+              />
+            ))}
+          </ModelSelectorGroup>
         </ModelSelectorList>
       </ModelSelectorContent>
     </ModelSelector>
@@ -81,7 +75,7 @@ export function ToggleModel({
 /* -------------------------------------------------------------------------- */
 
 interface ModelItemProps {
-  m: Model;
+  m: ModelUi;
   selectedModel: string;
   onSelect: (id: string) => void;
 }
