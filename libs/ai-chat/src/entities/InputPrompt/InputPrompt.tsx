@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import {
   PromptInputMessage,
   PromptInputProvider,
@@ -9,10 +9,7 @@ import {
   PromptInputSubmit,
   PromptInput,
 } from '@contextprism/ai-components';
-import { CtxModels } from '../../app/chat.provider';
-
-const SUBMITTING_TIMEOUT = 200;
-const STREAMING_TIMEOUT = 2000;
+import { CtxModels, useChatCtx } from '../../app/chat.provider';
 
 /* -------------------------------------------------------------------------- */
 // ---
@@ -32,11 +29,10 @@ export const InputPrompt = ({
   models,
   placeSlots: { tools },
 }: InputPromptComponentProps) => {
-  const [status, setStatus] = useState<
-    'submitted' | 'streaming' | 'ready' | 'error'
-  >('ready');
+  const { lastUserLLM, sendMessage, status } = useChatCtx();
 
   const handleSubmit = useCallback((message: PromptInputMessage) => {
+    console.log('message', message);
     const hasText = Boolean(message.text);
     const hasAttachments = Boolean(message.files?.length);
 
@@ -44,18 +40,11 @@ export const InputPrompt = ({
       return;
     }
 
-    setStatus('submitted');
+    // setStatus('submitted');
 
     // eslint-disable-next-line no-console
     console.log('Submitting message:', message);
-
-    setTimeout(() => {
-      setStatus('streaming');
-    }, SUBMITTING_TIMEOUT);
-
-    setTimeout(() => {
-      setStatus('ready');
-    }, STREAMING_TIMEOUT);
+    sendMessage({ text: message.text }, { body: { model: lastUserLLM?.name } });
   }, []);
 
   return (
