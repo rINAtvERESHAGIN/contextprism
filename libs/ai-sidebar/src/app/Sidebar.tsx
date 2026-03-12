@@ -1,25 +1,9 @@
 import { Divider } from '@mui/material';
 import { Title } from '../entities/Title.Sidebar';
 import { SidebarLayout } from './ui/SidebarLayout';
-import { ChatUi, useChatCtx } from '@contextprism/ai-chat';
-import { useQuery } from '@tanstack/react-query';
+import { ChatUi } from '@contextprism/ai-chat';
 
-interface SidebarProps {
-  model?: string;
-}
-
-interface SidebarFormValues {
-  llmModel: '';
-  search: '';
-}
-
-export function Sidebar({}: SidebarProps) {
-  const { messages, sendMessage, status, addToolOutput } = useChatCtx();
-
-  function handleOnSubmitForm(searchAiInput: string, confermedModel: string) {
-    sendMessage({ text: searchAiInput }, { body: { model: confermedModel } });
-  }
-
+export function Sidebar() {
   return (
     <div className='bg-red-300 p-4 rounded-3xl h-full'>
       <SidebarLayout>
@@ -27,19 +11,9 @@ export function Sidebar({}: SidebarProps) {
           <Title />
         </SidebarLayout.TitleLayout>
         <Divider />
-        {/* <SidebarForm onSubmit={handleOnSubmitForm}> */}
-        <ChatUi messages={messages} />
+
+        <ChatUi />
       </SidebarLayout>
-      {/* <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          size='large'
-          sx={{ alignSelf: 'flex-start', mt: 2 }}
-        >
-          Искать
-        </Button>
-      </SidebarForm> */}
     </div>
   );
 }

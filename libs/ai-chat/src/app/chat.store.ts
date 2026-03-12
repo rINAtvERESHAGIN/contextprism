@@ -29,4 +29,4 @@ const withDevTools = devtools(withPersist, {
   // version: 1,          // можно указать версию и сделать миграцию
 });
 
-export const useChatStore = create(withDevTools);
+export const useChatStore = create(withImmer);
