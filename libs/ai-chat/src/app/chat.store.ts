@@ -12,9 +12,13 @@ const store: StateCreator<ChatStore, [], [], ChatStore> = set => ({
   lastUserLLM: undefined,
   lastMessage: [],
   setLastUserLLM: (val: string) =>
-    set(state => {
-      state.lastUserLLM = val;
-    }),
+    set(
+      state => {
+        state.lastUserLLM = val;
+      },
+      false,
+      'chat/set-current-llm-model'
+    ),
 });
 
 const withImmer = immer(store);

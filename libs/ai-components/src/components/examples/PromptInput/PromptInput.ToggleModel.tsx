@@ -1,4 +1,4 @@
-import { Dispatch, memo, SetStateAction, useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import {
   ModelSelector,
   ModelSelectorTrigger,
@@ -23,7 +23,7 @@ export interface ModelUi {
   providers: string[];
 }
 
-export function ToggleModel({
+export function ToggleModelUi({
   models,
   selectedModelData,
   onSelect,

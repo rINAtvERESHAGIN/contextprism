@@ -2,10 +2,8 @@ import { InputPrompt } from '../entities/InputPrompt/InputPrompt';
 import { Conversation } from '../entities/Conversation/Conversation';
 import { useChatCtx } from './chat.provider';
 import { Layout } from '../entities/Layout/Layout';
-import {
-  useMemo,
-} from 'react';
-import { ToggleLLMModel } from '../features/ToggleLLMModel/ToggleLLMModel';
+import { useMemo } from 'react';
+import { ToggleLLMModel } from '../features/ToggleLLMModel/ToggleLlmModel';
 
 export function ChatUi() {
   const { models, messages } = useChatCtx();
@@ -15,11 +13,7 @@ export function ChatUi() {
   return (
     <Layout>
       <Conversation messages={messages} />
-      <InputPrompt
-        models={models}
-        // placeSlots={{ tools: [<ToggleLLMModel />] }}
-        placeSlots={{ tools: chatTools }}
-      />
+      <InputPrompt models={models} placeSlots={{ tools: chatTools }} />
     </Layout>
   );
 }

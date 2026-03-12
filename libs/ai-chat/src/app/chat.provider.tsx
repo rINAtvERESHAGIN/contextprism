@@ -43,9 +43,22 @@ interface ICtxValue {
 
 const ChatAccessCtx = createContext<ICtxValue | undefined>(undefined);
 
-export function ChatProvider({ children }: PropsWithChildren) {
-  const { data: models } = useGetModelsList();
+export function useChatCtx() {
+  const context = useContext(ChatAccessCtx);
 
+  if (!context) throw new Error('Must be in scope of ChatAccessCtx');
+
+  return context;
+}
+/* -------------------------------------------------------------------------- */
+// ---Provider
+/* -------------------------------------------------------------------------- */
+export function ChatProvider({ children }: PropsWithChildren) {
+  //store
+  const { lastUserLLM, setLastUserLLM } = useChatStore();
+  //api
+  const { data: models } = useGetModelsList();
+  //ai
   const {
     status,
     messages,
@@ -53,9 +66,7 @@ export function ChatProvider({ children }: PropsWithChildren) {
     addToolOutput,
     addToolApprovalResponse,
   } = useOChat();
-
-  const { lastUserLLM, setLastUserLLM } = useChatStore();
-
+  //ctx memo value
   const value = useMemo(() => {
     return {
       status,
@@ -79,12 +90,4 @@ export function ChatProvider({ children }: PropsWithChildren) {
   ]);
 
   return <ChatAccessCtx value={value}>{children}</ChatAccessCtx>;
-}
-
-export function useChatCtx() {
-  const context = useContext(ChatAccessCtx);
-
-  if (!context) throw new Error('Must be in scope of ChatAccessCtx');
-
-  return context;
 }

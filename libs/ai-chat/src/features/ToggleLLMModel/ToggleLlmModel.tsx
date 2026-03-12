@@ -1,9 +1,10 @@
-import { ToggleModel } from '@contextprism/ai-components';
+import { ToggleModelUi } from '@contextprism/ai-components';
 import {
   useCallback,
   Dispatch,
   SetStateAction,
-  useMemo
+  useMemo,
+  useEffect,
 } from 'react';
 import { useChatCtx } from '../../app/chat.provider';
 
@@ -24,6 +25,10 @@ export function ToggleLLMModel() {
     [models, setLastUserLLM]
   );
 
+  useEffect(() => {
+    console.log(models);
+  }, []);
+
   const arrModels = useMemo(
     () => (models ? Object.values(models) : []),
     [models]
@@ -31,7 +36,7 @@ export function ToggleLLMModel() {
 
   // return <h1>null12341234</h1>;
   return (
-    <ToggleModel
+    <ToggleModelUi
       models={arrModels}
       selectedModelData={lastUserLLM || Object.values(models)[0]}
       onSelect={handleModelSelect}
