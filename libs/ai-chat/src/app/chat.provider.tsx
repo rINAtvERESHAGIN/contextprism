@@ -9,7 +9,7 @@ export type CtxModels = Record<string, ModelUi>;
 interface ICtxValue {
   status: 'submitted' | 'streaming' | 'ready' | 'error';
   messages: UIMessage[];
-  models: CtxModels;
+  models: CtxModels | undefined;
   lastUserLLM: ModelUi | undefined;
   setLastUserLLM: (value: string) => void;
   addToolOutput: (
@@ -74,6 +74,8 @@ export function ChatProvider({ children }: PropsWithChildren) {
     addToolOutput,
     addToolApprovalResponse,
     models,
+    lastUserLLM,
+    setLastUserLLM,
   ]);
 
   return <ChatAccessCtx value={value}>{children}</ChatAccessCtx>;

@@ -24,20 +24,24 @@ export interface ModelUi {
 }
 
 export function ToggleModel({
-  open,
-  selectedModelData,
   models,
-  onOpenChange,
+  selectedModelData,
   onSelect,
 }: {
-  open: boolean;
   selectedModelData: ModelUi;
   models: ModelUi[];
-  onOpenChange: Dispatch<SetStateAction<boolean>>;
-  onSelect: (id: string) => void;
+  onSelect: (
+    id: string,
+    callback: { setModelSelectorOpen: Dispatch<SetStateAction<boolean>> }
+  ) => void;
 }) {
+  const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
+
+  function handleOnSelect(id: string) {
+    return onSelect(id, { setModelSelectorOpen });
+  }
   return (
-    <ModelSelector onOpenChange={onOpenChange} open={open}>
+    <ModelSelector open={modelSelectorOpen} onOpenChange={setModelSelectorOpen}>
       <ModelSelectorTrigger asChild>
         <PromptInputButton>
           {selectedModelData && selectedModelData?.chefSlug && (
@@ -58,8 +62,8 @@ export function ToggleModel({
             {models.map(m => (
               <ModelItem
                 key={m.id}
-                m={m}
-                onSelect={onSelect}
+                model={m}
+                onSelect={handleOnSelect}
                 selectedModel={selectedModelData && selectedModelData.name}
               />
             ))}
@@ -75,29 +79,32 @@ export function ToggleModel({
 /* -------------------------------------------------------------------------- */
 
 interface ModelItemProps {
-  m: ModelUi;
+  model: ModelUi;
   selectedModel: string;
   onSelect: (id: string) => void;
 }
 
-const ModelItem = memo(({ m, selectedModel, onSelect }: ModelItemProps) => {
-  const handleSelect = useCallback(() => onSelect(m.id), [onSelect, m.id]);
+const ModelItem = ({ model, selectedModel, onSelect }: ModelItemProps) => {
+  const handleSelect = useCallback(
+    () => onSelect(model.id),
+    [onSelect, model.id]
+  );
   return (
-    <ModelSelectorItem key={m.id} onSelect={handleSelect} value={m.id}>
-      <ModelSelectorLogo provider={m.chefSlug} />
-      <ModelSelectorName>{m.name}</ModelSelectorName>
+    <ModelSelectorItem key={model.id} onSelect={handleSelect} value={model.id}>
+      <ModelSelectorLogo provider={model.chefSlug} />
+      <ModelSelectorName>{model.name}</ModelSelectorName>
       <ModelSelectorLogoGroup>
-        {m.providers.map(provider => (
+        {model.providers.map(provider => (
           <ModelSelectorLogo key={provider} provider={provider} />
         ))}
       </ModelSelectorLogoGroup>
-      {selectedModel === m.id ? (
+      {selectedModel === model.id ? (
         <CheckIcon className='ml-auto size-4' />
       ) : (
         <div className='ml-auto size-4' />
       )}
     </ModelSelectorItem>
   );
-});
+};
 
 ModelItem.displayName = 'ModelItem';

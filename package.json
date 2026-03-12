@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "FRONT_END": "echo FRONT_END",
     "dev:todo": "nx run @contextprism/todo:dev",
+    "----------": "echo FRONT_END",
     "dev:backend": "nx run whisper-proxy:dev",
     "run:form":"nx run @contextprism/form:dev "
   },
