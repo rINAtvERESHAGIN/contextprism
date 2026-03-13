@@ -1,33 +1,20 @@
 import { ToggleModelUi } from '@contextprism/ai-components';
-import {
-  useCallback,
-  Dispatch,
-  SetStateAction,
-  useMemo,
-  useEffect,
-} from 'react';
+import { useCallback, Dispatch, SetStateAction, useMemo } from 'react';
 import { useChatCtx } from '../../app/chat.provider';
 
 export function ToggleLLMModel() {
   const { models, lastUserLLM, setLastUserLLM } = useChatCtx();
-
   const handleModelSelect = useCallback(
     (
       id: string,
       callback: { setModelSelectorOpen: Dispatch<SetStateAction<boolean>> }
     ) => {
-      console.log('model::id::', id);
+      // NOTICE: update chat store : current user option model
       if (models) setLastUserLLM(models[id]);
       callback.setModelSelectorOpen(false);
-      console.log('models:::::', models);
-      // NOTICE: update chat store : current user option model
     },
     [models, setLastUserLLM]
   );
-
-  useEffect(() => {
-    console.log(models);
-  }, []);
 
   const arrModels = useMemo(
     () => (models ? Object.values(models) : []),

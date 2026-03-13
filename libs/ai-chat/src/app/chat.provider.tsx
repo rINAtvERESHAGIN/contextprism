@@ -1,44 +1,11 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
-import { ChatRequestOptions, CreateUIMessage, FileUIPart, UIMessage } from 'ai';
-import { useOChat } from './chat.ai-hook';
 import { useGetModelsList } from '@contextprism/ai-fetch';
 import { useChatStore } from './chat.store';
-import { ModelUi } from '@contextprism/ai-components';
+import { ICtxValue } from '../shared/types/ChatContextValue';
+import { useOChat } from './chat.ai-hook';
+import { BackendSuffix } from '@contextprism/ai-fetch';
 
-export type CtxModels = Record<string, ModelUi>;
-interface ICtxValue {
-  status: 'submitted' | 'streaming' | 'ready' | 'error';
-  messages: UIMessage[];
-  models: CtxModels | undefined;
-  lastUserLLM: ModelUi | undefined;
-  setLastUserLLM: (value: string) => void;
-  addToolOutput: (
-    options:
-      | { tool: string; toolCallId: string; output: unknown }
-      | {
-          tool: string;
-          toolCallId: string;
-          state: 'output-error';
-          errorText: string;
-        }
-  ) => void;
-  addToolApprovalResponse: (options: {
-    id: string;
-    approved: boolean;
-    reason?: string;
-  }) => void | PromiseLike<void>;
-  sendMessage: (
-    message?:
-      | {
-          text: string;
-          files?: FileList | FileUIPart[];
-          metadata?;
-          messageId?: string;
-        }
-      | CreateUIMessage,
-    options?: ChatRequestOptions
-  ) => Promise<void>;
-}
+export const GLOBAL_CHAT_BACKEND_PREFIX: BackendSuffix = 'vllm';
 
 const ChatAccessCtx = createContext<ICtxValue | undefined>(undefined);
 
@@ -52,11 +19,12 @@ export function useChatCtx() {
 /* -------------------------------------------------------------------------- */
 // ---Provider
 /* -------------------------------------------------------------------------- */
+
 export function ChatProvider({ children }: PropsWithChildren) {
   //store
   const { lastUserLLM, setLastUserLLM } = useChatStore();
   //api
-  const { data: models } = useGetModelsList();
+  const { data: models } = useGetModelsList(GLOBAL_CHAT_BACKEND_PREFIX);
   //ai
   const {
     status,
@@ -64,7 +32,7 @@ export function ChatProvider({ children }: PropsWithChildren) {
     sendMessage,
     addToolOutput,
     addToolApprovalResponse,
-  } = useOChat();
+  } = useOChat(GLOBAL_CHAT_BACKEND_PREFIX);
   //ctx memo value
   const value = useMemo(() => {
     return {
@@ -76,6 +44,7 @@ export function ChatProvider({ children }: PropsWithChildren) {
       models,
       lastUserLLM,
       setLastUserLLM,
+      GLOBAL_CHAT_BACKEND_PREFIX,
     };
   }, [
     status,
@@ -86,6 +55,7 @@ export function ChatProvider({ children }: PropsWithChildren) {
     models,
     lastUserLLM,
     setLastUserLLM,
+    GLOBAL_CHAT_BACKEND_PREFIX,
   ]);
 
   return <ChatAccessCtx value={value}>{children}</ChatAccessCtx>;

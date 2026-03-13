@@ -1,14 +1,14 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
-
 import { helloWorldRoutes } from './routes/api/hello-worlds';
-import { prettyJSON } from 'hono/pretty-json';
 import { llm } from './routes/api/llm';
-import { logger } from 'hono/logger'
+import { logger } from 'hono/logger';
+import { vllm } from './routes/api/vllm';
+
 // ---Init Hono
 const app = new Hono();
-app.use('*',logger());
+app.use('*', logger());
 // ---Config
 app.use(
   '*',
@@ -26,9 +26,10 @@ app.use(
 );
 // ---Routes
 app.route('/hono/api/hello', helloWorldRoutes);
-app.route('/hono/api/llm/', llm);
+app.route('/hono/api/llm', llm);
+app.route('/hono/api/vllm', vllm);
 
-app.use(prettyJSON());
+// app.use(prettyJSON());
 
 // ---Running server
 serve(

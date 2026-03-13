@@ -7,8 +7,6 @@ import {
   UIMessage,
   streamText as streamTextAi,
 } from 'ai';
-import { systemPromtsBase } from '../../configs/system.promts';
-import { toolsTodoApp } from '../../tools';
 
 type Body = Parameters<typeof streamText>[number];
 type Message = NonNullable<Body['messages']>[0];
@@ -29,7 +27,7 @@ const requestBodySchema = z.object({
 });
 
 export type RequestBody = z.infer<typeof requestBodySchema>;
-
+// TroubleShooting
 const app = new Hono();
 const ollama = createOllama({ baseURL: BASE_URL });
 

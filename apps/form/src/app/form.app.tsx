@@ -4,13 +4,20 @@ import { Fragment } from 'react/jsx-runtime';
 
 const queryClient = new QueryClient();
 
+function PanelSidebar() {
+  return (
+    <PanelContainer sidebar={<Sidebar />}>
+      <div>Future form</div>
+    </PanelContainer>
+  );
+}
+
 export function App() {
   return (
     <Fragment>
       <QueryClientProvider client={queryClient}>
-        <PanelContainer sidebar={<Sidebar />}>
-          <div>Future form</div>
-        </PanelContainer>
+        {/* <PanelSidebar /> */}
+        <Sidebar />
       </QueryClientProvider>
     </Fragment>
   );
