@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "generate:SDK:vllm": "node scripts/generate-vllm-api-sdk.js"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.41",
@@ -18,5 +19,8 @@
     "hono": "^4.12.3",
     "tsx": "^4.21.0",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "0.94.1"
   }
 }

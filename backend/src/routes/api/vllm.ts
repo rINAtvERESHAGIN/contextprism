@@ -2,8 +2,9 @@ import { Hono } from 'hono';
 import { convertToModelMessages, UIMessage, streamText } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import { toolsTodoApp } from '../../tools';
+import { vllmClient } from '../../lib/clients';
 
-const OPEN_API_LAB = 'http://10.12.1.73:8100/v1';
+export const OPEN_API_LAB = 'http://10.12.1.73:8100/v1';
 const vllm = new Hono();
 
 const headerValue = 'API-Key-with--';
@@ -42,10 +43,9 @@ vllm.post('/chat', async ({ req }) => {
 });
 
 vllm.get('/models', async c => {
-  const response = await fetch(`${OPEN_API_LAB}/models`);
-  const data = await response.json();
+  const m = await vllmClient.showAvailableModelsV1ModelsGet();
 
-  return c.json(data);
+  return c.json(m.data);
 });
 
 /* -------------------------------------------------------------------------- */
